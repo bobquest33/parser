@@ -24,12 +24,5 @@ func main() {
 		os.Exit(0)
 	}
 
-	file, err := os.Open(*fileflag)
-	if err != nil {
-		fmt.Println("could not open file")
-		fmt.Println(err)
-		os.Exit(1)
-	}
-
-	Parse(file)
+	Parse(*fileflag)
 }
