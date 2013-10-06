@@ -16,4 +16,4 @@ $(TARGET):
 run: build
 	@./${TARGET}
 
-.PHONY: $(TARGET)
+.PHONY: $(TARGET) test
