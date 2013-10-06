@@ -24,5 +24,10 @@ func main() {
 		os.Exit(0)
 	}
 
-	Parse(*fileflag)
+	_, err := Parse(*fileflag)
+	if err != nil {
+		fmt.Println("ERROR")
+		fmt.Println(err)
+		os.Exit(1)
+	}
 }
