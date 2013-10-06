@@ -1,0 +1,4 @@
+reapub-parser
+=============
+
+Go library for parsing EPUB files. Also includes a CLI tool for testing purposes.
