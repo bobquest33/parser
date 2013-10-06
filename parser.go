@@ -11,7 +11,9 @@ var (
 	UnexpectedError = fmt.Errorf("An unexpected error happened")
 )
 
-type EPUB struct{}
+type EPUB struct {
+	Titles []string
+}
 
 type epubFile struct {
 	data *EPUB
@@ -27,11 +29,19 @@ func Parse(path string) (*EPUB, error) {
 	ef := &epubFile{&EPUB{}, r}
 	defer ef.r.Close()
 
-	container, err := parseContainer(ef)
+	c, err := parseContainer(ef)
 	if err != nil {
 		return nil, err
 	}
-	fmt.Println(container.OEBPSPackagePath)
+
+	fmt.Println("container:", c)
+
+	m, err := parseMetadata(ef, c)
+	if err != nil {
+		return nil, err
+	}
+
+	fmt.Println("metadata:", m)
 
 	return nil, nil
 }
