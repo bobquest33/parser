@@ -5,13 +5,13 @@ import (
 	"testing"
 )
 
-func tEF() *epubFile {
+func cEF() *epubFile {
 	r, _ := zip.OpenReader("test/metamorphosis.epub")
 	return &epubFile{&EPUB{}, r}
 }
 
 func TestParseGeneral(t *testing.T) {
-	ef := tEF()
+	ef := cEF()
 	defer ef.r.Close()
 
 	_, err := parseContainer(ef)
@@ -21,7 +21,7 @@ func TestParseGeneral(t *testing.T) {
 }
 
 func TestOEBPSPackagePath(t *testing.T) {
-	ef := tEF()
+	ef := cEF()
 	defer ef.r.Close()
 
 	c, _ := parseContainer(ef)
