@@ -14,14 +14,15 @@ type container struct {
 func parseContainer(ef *epubFile) (*container, error) {
 	c := &container{}
 
-	rootfile := findZipFile(ef.r, "META-INF/container.xml")
+	rootpath := "META-INF/container.xml"
+	rootfile := findZipFile(ef.r, rootpath)
 	if rootfile == nil {
 		return nil, NoEPUBError
 	}
 
 	fr, err := rootfile.Open()
 	if err != nil {
-		return nil, fmt.Errorf("could not open container.xml, %s", err)
+		return nil, fmt.Errorf("could not open %s, %s", rootpath, err)
 	}
 	defer fr.Close()
 
@@ -36,7 +37,7 @@ func parseContainer(ef *epubFile) (*container, error) {
 	defer doc.Free()
 	doc.RecursivelyRemoveNamespaces()
 
-	res, _ := doc.Search("//container/rootfiles/rootfile")
+	res, _ := doc.Search("/container/rootfiles/rootfile")
 	for _, node := range res {
 		if node.Attr("media-type") == "application/oebps-package+xml" {
 			c.OEBPSPackagePath = node.Attr("full-path")
