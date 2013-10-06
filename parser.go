@@ -4,12 +4,6 @@ import (
 	"archive/zip"
 )
 
-var version string
-
-func Version() string {
-	return version
-}
-
 type EPUB struct{}
 
 type epubFile struct {
