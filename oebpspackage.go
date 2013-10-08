@@ -53,6 +53,7 @@ func parseOEBPSPackage(ef *epubFile, c *container) error {
 	epub.Dates = parseDates(mn)
 	epub.Identifiers = parseIdentifiers(mn)
 	epub.Source = parseSource(mn)
+	epub.Languages = parseLanguages(mn)
 
 	return nil
 }
@@ -153,4 +154,15 @@ func parseSource(m xml.Node) string {
 	}
 
 	return ""
+}
+
+func parseLanguages(m xml.Node) []string {
+	languages := []string{}
+
+	res, _ := m.Search("language")
+	for _, n := range res {
+		languages = append(languages, n.Content())
+	}
+
+	return languages
 }

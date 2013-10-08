@@ -149,3 +149,14 @@ func TestMetadataSource(t *testing.T) {
 	expected := "http://www.gutenberg.orgfiles/5200/5200-h/5200-h.htm"
 	assert.Equal(t, expected, actual)
 }
+
+func TestMetadataLanguages(t *testing.T) {
+	ef, c := mEF(), mC()
+	defer ef.r.Close()
+
+	parseOEBPSPackage(ef, c)
+
+	actual := ef.data.Languages
+	expected := []string{"en", "de"}
+	assert.Equal(t, expected, actual)
+}
