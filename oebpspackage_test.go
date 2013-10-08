@@ -61,3 +61,18 @@ func TestMetadataCreators(t *testing.T) {
 	}}
 	assert.Equal(t, expected, actual)
 }
+
+func TestMetadataContributors(t *testing.T) {
+	ef, c := mEF(), mC()
+	defer ef.r.Close()
+
+	parseOEBPSPackage(ef, c)
+
+	actual := ef.data.Contributors
+	expected := []*Person{&Person{
+		Name:   "David Wyllie",
+		FileAs: "Wyllie, David",
+		Role:   "trl",
+	}}
+	assert.Equal(t, expected, actual)
+}

@@ -42,9 +42,11 @@ func parseOEBPSPackage(ef *epubFile, c *container) error {
 	mn := res[0]
 
 	creators, _ := mn.Search("creator")
+	contributors, _ := mn.Search("contributor")
 
 	epub.Titles = parseTitles(mn)
 	epub.Creators = parsePeople(creators)
+	epub.Contributors = parsePeople(contributors)
 
 	return nil
 }

@@ -19,9 +19,10 @@ type Person struct {
 }
 
 type EPUB struct {
-	Version  string
-	Titles   []string
-	Creators []*Person
+	Version      string
+	Titles       []string
+	Creators     []*Person
+	Contributors []*Person
 }
 
 type epubFile struct {
