@@ -50,6 +50,7 @@ func parseOEBPSPackage(ef *epubFile, c *container) error {
 	epub.Subjects = parseSubjects(mn)
 	epub.Description = parseDescription(mn)
 	epub.Publisher = parsePublisher(mn)
+	epub.Dates = parseDates(mn)
 
 	return nil
 }
@@ -110,4 +111,22 @@ func parsePublisher(m xml.Node) string {
 	}
 
 	return publisher
+}
+
+func parseDates(m xml.Node) []*Date {
+	dates := []*Date{}
+
+	res, _ := m.Search("date")
+	for _, n := range res {
+		date := Date{Date: n.Content(), Event: n.Attr("event")}
+		dates = append(dates, &date)
+	}
+
+	res, _ = m.Search("meta[@property='dcterms:modified']")
+	if len(res) > 0 {
+		date := Date{Date: res[0].Content(), Event: "modified"}
+		dates = append(dates, &date)
+	}
+
+	return dates
 }

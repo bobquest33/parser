@@ -18,6 +18,11 @@ type Person struct {
 	Role   string
 }
 
+type Date struct {
+	Date  string
+	Event string
+}
+
 type EPUB struct {
 	Version      string
 	Titles       []string
@@ -26,6 +31,7 @@ type EPUB struct {
 	Subjects     []string
 	Description  string
 	Publisher    string
+	Dates        []*Date
 }
 
 type epubFile struct {

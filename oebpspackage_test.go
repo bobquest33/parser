@@ -109,3 +109,18 @@ func TestMetadataPublisher(t *testing.T) {
 	expected := "Random House"
 	assert.Equal(t, expected, actual)
 }
+
+func TestMetadataDates(t *testing.T) {
+	ef, c := mEF(), mC()
+	defer ef.r.Close()
+
+	parseOEBPSPackage(ef, c)
+
+	actual := ef.data.Dates
+	expected := []*Date{
+		&Date{Date: "2005-08-17", Event: "publication"},
+		&Date{Date: "2013-03-13T11:10:00.924800+00:00", Event: "conversion"},
+		&Date{Date: "2012-01-18T12:47:00Z", Event: "modified"},
+	}
+	assert.Equal(t, expected, actual)
+}

@@ -1,7 +1,5 @@
 Parse...
 
-* Dates (xml: date)
-* Modified date (xml: meta@modified)
 * Identifiers (xml: identifier)
 * Source (xml: source)
 * Languages (xml: language)
