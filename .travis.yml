@@ -3,6 +3,7 @@ go: 1.1
 
 install:
   - go get ./...
+  - go get github.com/bmizerany/assert
 
 script:
   - make test

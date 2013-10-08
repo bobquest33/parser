@@ -4,7 +4,7 @@ import (
 	"archive/zip"
 	"testing"
 
-	"github.com/reapub/parser/testutil"
+	"github.com/bmizerany/assert"
 )
 
 func mEF() *epubFile {
@@ -20,7 +20,7 @@ func TestParseOEBPSPackage(t *testing.T) {
 	ef, c := mEF(), mC()
 	defer ef.r.Close()
 
-	_, err := parseOEBPSPackage(ef, c)
+	err := parseOEBPSPackage(ef, c)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -30,24 +30,34 @@ func TestOEBPSVersion(t *testing.T) {
 	ef, c := mEF(), mC()
 	defer ef.r.Close()
 
-	m, _ := parseOEBPSPackage(ef, c)
+	parseOEBPSPackage(ef, c)
 
-	actual := m.Version
+	actual := ef.data.Version
 	expected := "2.0"
-	if actual != expected {
-		t.Errorf("expected Version to be %s, got %s", expected, actual)
-	}
+	assert.Equal(t, expected, actual)
 }
 
-func TestMetadataOEBPSTitles(t *testing.T) {
+func TestMetadataTitles(t *testing.T) {
 	ef, c := mEF(), mC()
 	defer ef.r.Close()
 
-	m, _ := parseOEBPSPackage(ef, c)
+	parseOEBPSPackage(ef, c)
 
-	actual := m.Metadata.Titles
+	actual := ef.data.Titles
 	expected := []string{"Metamorphosis"}
-	if !testutil.StrSliceEquals(actual, expected) {
-		t.Errorf("expected Titles to be %v, got %v", expected, actual)
-	}
+	assert.Equal(t, expected, actual)
+}
+
+func TestMetadataCreators(t *testing.T) {
+	ef, c := mEF(), mC()
+	defer ef.r.Close()
+
+	parseOEBPSPackage(ef, c)
+
+	actual := ef.data.Creators
+	expected := []*Person{&Person{
+		Name:   "Franz Kafka",
+		FileAs: "Kafka, Franz",
+	}}
+	assert.Equal(t, expected, actual)
 }
