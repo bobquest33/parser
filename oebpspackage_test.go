@@ -26,13 +26,26 @@ func TestParseOEBPSPackage(t *testing.T) {
 	}
 }
 
-func TestOEBPSTitles(t *testing.T) {
+func TestOEBPSVersion(t *testing.T) {
 	ef, c := mEF(), mC()
 	defer ef.r.Close()
 
 	m, _ := parseOEBPSPackage(ef, c)
 
-	actual := m.Titles
+	actual := m.Version
+	expected := "2.0"
+	if actual != expected {
+		t.Errorf("expected Version to be %s, got %s", expected, actual)
+	}
+}
+
+func TestMetadataOEBPSTitles(t *testing.T) {
+	ef, c := mEF(), mC()
+	defer ef.r.Close()
+
+	m, _ := parseOEBPSPackage(ef, c)
+
+	actual := m.Metadata.Titles
 	expected := []string{"Metamorphosis"}
 	if !testutil.StrSliceEquals(actual, expected) {
 		t.Errorf("expected Titles to be %v, got %v", expected, actual)

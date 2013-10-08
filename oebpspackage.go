@@ -8,8 +8,13 @@ import (
 	"github.com/moovweb/gokogiri/xml"
 )
 
-type oebpspackage struct {
+type metadata struct {
 	Titles []string
+}
+
+type oebpspackage struct {
+	Version  string
+	Metadata *metadata
 }
 
 func parseOEBPSPackage(ef *epubFile, c *container) (*oebpspackage, error) {
@@ -37,24 +42,26 @@ func parseOEBPSPackage(ef *epubFile, c *container) (*oebpspackage, error) {
 	defer doc.Free()
 	doc.RecursivelyRemoveNamespaces()
 
+	m.Version = doc.Root().Attr("version")
+
 	res, _ := doc.Search("/package/metadata")
 	if len(res) != 1 {
 		return nil, NoEPUBError
 	}
 
 	mn := res[0]
-	m.Titles = parseTitles(mn)
+	m.Metadata = parseMetadata(mn)
 
 	return m, nil
 }
 
-func parseTitles(m xml.Node) []string {
-	titles := []string{}
+func parseMetadata(m xml.Node) *metadata {
+	metadata := &metadata{}
 
 	res, _ := m.Search("title")
 	for _, n := range res {
-		titles = append(titles, n.Content())
+		metadata.Titles = append(metadata.Titles, n.Content())
 	}
 
-	return titles
+	return metadata
 }
