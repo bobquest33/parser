@@ -16,21 +16,21 @@ func mC() *container {
 	return &container{"5200/content.opf"}
 }
 
-func TestParseMetadata(t *testing.T) {
+func TestParseOEBPSPackage(t *testing.T) {
 	ef, c := mEF(), mC()
 	defer ef.r.Close()
 
-	_, err := parseMetadata(ef, c)
+	_, err := parseOEBPSPackage(ef, c)
 	if err != nil {
 		t.Fatal(err)
 	}
 }
 
-func TestMetadataTitles(t *testing.T) {
+func TestOEBPSTitles(t *testing.T) {
 	ef, c := mEF(), mC()
 	defer ef.r.Close()
 
-	m, _ := parseMetadata(ef, c)
+	m, _ := parseOEBPSPackage(ef, c)
 
 	actual := m.Titles
 	expected := []string{"Metamorphosis"}

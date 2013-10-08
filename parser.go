@@ -36,7 +36,7 @@ func Parse(path string) (*EPUB, error) {
 
 	fmt.Println("container:", c)
 
-	m, err := parseMetadata(ef, c)
+	m, err := parseOEBPSPackage(ef, c)
 	if err != nil {
 		return nil, err
 	}

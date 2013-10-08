@@ -8,12 +8,12 @@ import (
 	"github.com/moovweb/gokogiri/xml"
 )
 
-type metadata struct {
+type oebpspackage struct {
 	Titles []string
 }
 
-func parseMetadata(ef *epubFile, c *container) (*metadata, error) {
-	m := &metadata{}
+func parseOEBPSPackage(ef *epubFile, c *container) (*oebpspackage, error) {
+	m := &oebpspackage{}
 
 	file := findZipFile(ef.r, c.OEBPSPackagePath)
 	if file == nil {
