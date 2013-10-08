@@ -98,3 +98,14 @@ func TestMetadataDescription(t *testing.T) {
 	expected := "Classic story of self-discovery, told in a unique manner by Kafka."
 	assert.Equal(t, expected, actual)
 }
+
+func TestMetadataPublisher(t *testing.T) {
+	ef, c := mEF(), mC()
+	defer ef.r.Close()
+
+	parseOEBPSPackage(ef, c)
+
+	actual := ef.data.Publisher
+	expected := "Random House"
+	assert.Equal(t, expected, actual)
+}
