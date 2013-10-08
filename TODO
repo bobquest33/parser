@@ -1,0 +1,12 @@
+Parse...
+
+* Subjects (xml: subject)
+* Description (xml: description)
+* Publisher (xml: publisher)
+* Dates (xml: date)
+* Modified date (xml: meta@modified)
+* Identifiers (xml: identifier)
+* Source (xml: source)
+* Languages (xml: language)
+* Rights (xml: rights)
+* Cover
