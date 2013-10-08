@@ -24,10 +24,12 @@ func main() {
 		os.Exit(0)
 	}
 
-	_, err := Parse(*fileflag)
+	epub, err := Parse(*fileflag)
 	if err != nil {
 		fmt.Println("ERROR")
 		fmt.Println(err)
 		os.Exit(1)
 	}
+
+	fmt.Println(epub)
 }
