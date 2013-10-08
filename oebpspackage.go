@@ -47,6 +47,7 @@ func parseOEBPSPackage(ef *epubFile, c *container) error {
 	epub.Titles = parseTitles(mn)
 	epub.Creators = parsePeople(creators)
 	epub.Contributors = parsePeople(contributors)
+	epub.Subjects = parseSubjects(mn)
 
 	return nil
 }
@@ -74,4 +75,15 @@ func parsePeople(s []xml.Node) []*Person {
 		people = append(people, person)
 	}
 	return people
+}
+
+func parseSubjects(m xml.Node) []string {
+	subjects := []string{}
+
+	res, _ := m.Search("subject")
+	for _, n := range res {
+		subjects = append(subjects, n.Content())
+	}
+
+	return subjects
 }
