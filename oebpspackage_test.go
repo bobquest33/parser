@@ -138,3 +138,14 @@ func TestMetadataIdentifiers(t *testing.T) {
 	}
 	assert.Equal(t, expected, actual)
 }
+
+func TestMetadataSource(t *testing.T) {
+	ef, c := mEF(), mC()
+	defer ef.r.Close()
+
+	parseOEBPSPackage(ef, c)
+
+	actual := ef.data.Source
+	expected := "http://www.gutenberg.orgfiles/5200/5200-h/5200-h.htm"
+	assert.Equal(t, expected, actual)
+}

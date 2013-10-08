@@ -38,6 +38,7 @@ type EPUB struct {
 	Publisher    string
 	Dates        []*Date
 	Identifiers  []*Identifier
+	Source       string
 }
 
 type epubFile struct {
