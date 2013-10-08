@@ -87,3 +87,14 @@ func TestMetadataSubjects(t *testing.T) {
 	expected := []string{"Psychological fiction", "Metamorphosis -- Fiction"}
 	assert.Equal(t, expected, actual)
 }
+
+func TestMetadataDescription(t *testing.T) {
+	ef, c := mEF(), mC()
+	defer ef.r.Close()
+
+	parseOEBPSPackage(ef, c)
+
+	actual := ef.data.Description
+	expected := "Classic story of self-discovery, told in a unique manner by Kafka."
+	assert.Equal(t, expected, actual)
+}

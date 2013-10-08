@@ -48,6 +48,7 @@ func parseOEBPSPackage(ef *epubFile, c *container) error {
 	epub.Creators = parsePeople(creators)
 	epub.Contributors = parsePeople(contributors)
 	epub.Subjects = parseSubjects(mn)
+	epub.Description = parseDescription(mn)
 
 	return nil
 }
@@ -86,4 +87,16 @@ func parseSubjects(m xml.Node) []string {
 	}
 
 	return subjects
+}
+
+func parseDescription(m xml.Node) string {
+	description := ""
+
+	res, _ := m.Search("description")
+	if len(res) > 0 {
+		description = res[0].Content()
+		fmt.Println("description:", description)
+	}
+
+	return description
 }

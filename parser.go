@@ -24,6 +24,7 @@ type EPUB struct {
 	Creators     []*Person
 	Contributors []*Person
 	Subjects     []string
+	Description  string
 }
 
 type epubFile struct {

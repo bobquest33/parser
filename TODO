@@ -1,6 +1,5 @@
 Parse...
 
-* Description (xml: description)
 * Publisher (xml: publisher)
 * Dates (xml: date)
 * Modified date (xml: meta@modified)
