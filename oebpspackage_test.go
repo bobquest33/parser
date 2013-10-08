@@ -124,3 +124,17 @@ func TestMetadataDates(t *testing.T) {
 	}
 	assert.Equal(t, expected, actual)
 }
+
+func TestMetadataIdentifiers(t *testing.T) {
+	ef, c := mEF(), mC()
+	defer ef.r.Close()
+
+	parseOEBPSPackage(ef, c)
+
+	actual := ef.data.Identifiers
+	expected := []*Identifier{
+		&Identifier{Identifier: "http://www.gutenberg.org/ebooks/5200", Scheme: "URI"},
+		&Identifier{Identifier: "9781479157303", Scheme: "ISBN"},
+	}
+	assert.Equal(t, expected, actual)
+}

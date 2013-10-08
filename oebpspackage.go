@@ -51,6 +51,7 @@ func parseOEBPSPackage(ef *epubFile, c *container) error {
 	epub.Description = parseDescription(mn)
 	epub.Publisher = parsePublisher(mn)
 	epub.Dates = parseDates(mn)
+	epub.Identifiers = parseIdentifiers(mn)
 
 	return nil
 }
@@ -129,4 +130,16 @@ func parseDates(m xml.Node) []*Date {
 	}
 
 	return dates
+}
+
+func parseIdentifiers(m xml.Node) []*Identifier {
+	identifiers := []*Identifier{}
+
+	res, _ := m.Search("identifier")
+	for _, n := range res {
+		identifier := Identifier{Identifier: n.Content(), Scheme: n.Attr("scheme")}
+		identifiers = append(identifiers, &identifier)
+	}
+
+	return identifiers
 }

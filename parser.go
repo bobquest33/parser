@@ -23,6 +23,11 @@ type Date struct {
 	Event string
 }
 
+type Identifier struct {
+	Identifier string
+	Scheme     string
+}
+
 type EPUB struct {
 	Version      string
 	Titles       []string
@@ -32,6 +37,7 @@ type EPUB struct {
 	Description  string
 	Publisher    string
 	Dates        []*Date
+	Identifiers  []*Identifier
 }
 
 type epubFile struct {
