@@ -12,7 +12,8 @@ var (
 )
 
 type EPUB struct {
-	Titles []string
+	Version string
+	Titles  []string
 }
 
 type epubFile struct {
@@ -34,14 +35,19 @@ func Parse(path string) (*EPUB, error) {
 		return nil, err
 	}
 
-	fmt.Println("container:", c)
-
-	m, err := parseOEBPSPackage(ef, c)
+	err = parseOEBPSPackage(ef, c)
 	if err != nil {
 		return nil, err
 	}
 
-	fmt.Println("metadata:", m)
+	return ef.data, nil
+}
 
-	return nil, nil
+func (e *EPUB) String() string {
+	return fmt.Sprintf(
+		"Version: %s\nTitles: %v",
+		e.Version,
+		e.Titles,
+	)
+
 }

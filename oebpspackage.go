@@ -8,60 +8,51 @@ import (
 	"github.com/moovweb/gokogiri/xml"
 )
 
-type metadata struct {
-	Titles []string
-}
-
-type oebpspackage struct {
-	Version  string
-	Metadata *metadata
-}
-
-func parseOEBPSPackage(ef *epubFile, c *container) (*oebpspackage, error) {
-	m := &oebpspackage{}
+func parseOEBPSPackage(ef *epubFile, c *container) error {
+	epub := ef.data
 
 	file := findZipFile(ef.r, c.OEBPSPackagePath)
 	if file == nil {
-		return nil, UnexpectedError
+		return UnexpectedError
 	}
 
 	fr, err := file.Open()
 	if err != nil {
-		return nil, fmt.Errorf("could not open %s, %s", c.OEBPSPackagePath, err)
+		return fmt.Errorf("could not open %s, %s", c.OEBPSPackagePath, err)
 	}
 	defer fr.Close()
 
 	data, err := ioutil.ReadAll(fr)
 	if err != nil {
-		return nil, UnexpectedError
+		return UnexpectedError
 	}
 	doc, err := gokogiri.ParseXml(data)
 	if err != nil {
-		return nil, InvalidXMLError
+		return InvalidXMLError
 	}
 	defer doc.Free()
 	doc.RecursivelyRemoveNamespaces()
 
-	m.Version = doc.Root().Attr("version")
+	epub.Version = doc.Root().Attr("version")
 
 	res, _ := doc.Search("/package/metadata")
 	if len(res) != 1 {
-		return nil, NoEPUBError
+		return NoEPUBError
 	}
 
 	mn := res[0]
-	m.Metadata = parseMetadata(mn)
+	epub.Titles = parseTitles(mn)
 
-	return m, nil
+	return nil
 }
 
-func parseMetadata(m xml.Node) *metadata {
-	metadata := &metadata{}
+func parseTitles(m xml.Node) []string {
+	titles := []string{}
 
 	res, _ := m.Search("title")
 	for _, n := range res {
-		metadata.Titles = append(metadata.Titles, n.Content())
+		titles = append(titles, n.Content())
 	}
 
-	return metadata
+	return titles
 }
