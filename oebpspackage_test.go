@@ -160,3 +160,14 @@ func TestMetadataLanguages(t *testing.T) {
 	expected := []string{"en", "de"}
 	assert.Equal(t, expected, actual)
 }
+
+func TestMetadataRights(t *testing.T) {
+	ef, c := mEF(), mC()
+	defer ef.r.Close()
+
+	parseOEBPSPackage(ef, c)
+
+	actual := ef.data.Rights
+	expected := "Copyrighted. Read the copyright notice inside this book for details."
+	assert.Equal(t, expected, actual)
+}

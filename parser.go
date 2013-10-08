@@ -40,6 +40,7 @@ type EPUB struct {
 	Identifiers  []*Identifier
 	Source       string
 	Languages    []string
+	Rights       string
 }
 
 type epubFile struct {
